@@ -1,74 +1,69 @@
-# 2D Nesne Segmentasyonu
+# MONAI 2D/3D Object Segmentation
 
-Bu proje, 2D görüntülerdeki nesneleri basit bir şekilde segmentlemek için derin öğrenme kullanarak bir model eğitmek ve test etmek için geliştirilmiştir. Model, MONAI kütüphanesi ve PyTorch kullanılarak oluşturulmuş bir U-Net yapısını temel alır. Kullanıcı, farklı şekillerde nesneler oluşturabilir (daire, kare, dikdörtgen, üçgen, elips) ve bu nesneleri segmentlemek için modelin tahminlerini alabilir.
+Bu repo, MONAI kütüphanesi ile 2D ve 3D nesne segmentasyonu yapmayı amaçlayan bir başlangıç rehberidir. Model eğitimi, test ve segmentasyon işlemleri için PyTorch ve CUDA kullanılacaktır.
 
-## Proje Adımları
+## Başlangıç
 
-1. **Gerekli Kütüphanelerin Yüklenmesi**:
-   Projeyi çalıştırmadan önce, gerekli Python kütüphanelerini yüklemeniz gerekmektedir. Aşağıdaki adımları izleyerek gerekli kütüphaneleri yükleyebilirsiniz.
+Bu bölüm, projeyi nasıl başlatacağınız ve gerekli ortamı nasıl kuracağınız konusunda rehberlik edecektir.
 
-    ```bash
-    !pip install monai matplotlib numpy torch torchvision opencv-python
-    ```
+### Gereksinimler
 
-2. **Veri Üretimi ve Eğitimi**:
-   - Modeli eğitmek için sentetik veriler üretilir. Bu veriler, kullanıcı tarafından belirtilen şekillere (daire, kare, dikdörtgen, vb.) sahip rastgele görüntülerden oluşur.
-   - Kullanıcıdan alınan nesne türüne göre etiketlenmiş veri setleri oluşturulur.
-   
-3. **Model Yapısı**:
-   - **U-Net** tabanlı bir model, her iki şekilde de (görüntü ve etiket) eğitilmek üzere kullanılır.
-   - **Dice Loss** fonksiyonu, modelin segmentasyon doğruluğunu artırmak için kullanılır.
-   - Eğitilmiş model, her epokta kaydedilir.
+Bu proje, PyTorch ve MONAI kütüphanesini kullanarak segmentasyon modelleri oluşturmanıza olanak sağlar. Aşağıdaki yazılımlar ve kütüphaneler gereklidir:
 
-4. **Tahmin ve Görselleştirme**:
-   - Model eğitildikten sonra, belirtilen nesne türüne ait görüntüler üzerinde tahminler yapılır.
-   - Tahminler, `tmp` klasöründe sıralı bir şekilde kaydedilir (örneğin, `img0.png`, `label0.png`, `pred0.png` gibi).
-   - Sonuçlar görselleştirilir ve kaydedilen görüntülerle karşılaştırılır.
+- Python 3.x (Python 3.6 ve sonrası)
+- PyTorch (CUDA destekli, GPU kullanımı için)
+- MONAI
+- NumPy
+- Matplotlib (Opsiyonel, görselleştirme için)
+
+## Ortam Kurulumu
+
+Projeyi çalıştırmak için önce bir Python sanal ortamı oluşturmanız gerekecek. Adım adım nasıl kurulacağı aşağıda belirtilmiştir.
+
+### 1. Python Ortamı Oluşturun:
+
+```bash
+python -m venv monai-segmentation-env
+```
+
+### 2. Ortamı Aktive Edin:
+
+**Windows:**
+
+```bash
+monai-segmentation-env\Scripts\activate
+```
+
+**Linux:**
+
+```bash
+monai-segmentation-env/bin/activate
+```
+
+### 3. Gerekli Kütüphaneleri Yükleyin:
+
+```bash
+pip install torch torchvision torchaudio
+pip install monai
+pip install matplotlib numpy
+```
+### 4. CUDA Destekli PyTorch Yüklemek İçin (GPU Kullanımı):
+
+CUDA destekli versiyonları yüklemek için [PyTorch İndirme Sayfası](https://pytorch.org/get-started/locally/) üzerinden uygun versiyonu seçebilirsiniz.
 
 ## Kullanım
 
-1. **Nesne Türünü Seçme**:
-   Proje, aşağıdaki şekiller için segmentasyon sağlar:
-   - daire
-   - kare
-   - dikdörtgen
-   - üçgen
-   - elips
+Bu bölümde, verisetlerini nasıl kullanabileceğiniz, eğitim ve test işlemleri hakkında bilgi verilecektir.
 
-   Kullanıcıdan bu nesne türlerinden birini girerek işlem başlatılır. Model dosyasının yolu dinamik olarak oluşturulur.
+### Verisetleri
 
-2. **Modelin Eğitilmesi ve Kaydedilmesi**:
-   Model, belirtilen nesne türüne göre eğitilir. Eğitim tamamlandıktan sonra model dosyası kaydedilir:
-   
-    ```python
-    torch.save(model.state_dict(), "def_model.pth")
-    ```
+Bu projede, 2D ve 3D segmentasyon modelleri eğitilebilir. Segmentasyon işlemi için kullanacağınız verisetinin uygun formatta olması gerekmektedir. Yaygın formatlar şunlardır:
 
-3. **Tahmin Yapma ve Sonuçların Kaydedilmesi**:
-   Model eğitildikten sonra, her bir nesne türü için tahminler yapılır ve `tmp` klasörüne sıralı bir şekilde kaydedilir.
+- **2D segmentasyon:** .png, .jpg gibi resim dosyaları.
+- **3D segmentasyon:** NIfTI formatında .nii veya .nii.gz dosyaları.
 
-## Kurulum
+### Örnek Verisetleri
 
-### Gereksinimler:
-- Python 3.7+
-- PyTorch
-- MONAI
-- NumPy
-- OpenCV
-- Matplotlib
+MONAI'nin sağladığı örnek verisetleri için [MONAI Datasets](https://monai.io/datasets) adresini ziyaret edebilirsiniz. Burada, medikal görüntüler gibi çeşitli segmentasyon verisetleri mevcuttur.
 
-### Yükleme:
-
-1. Projeyi kendi bilgisayarınıza klonlayın:
-
-    ```bash
-    git clone https://github.com/ersinerzurum/MONAI/2D_Segmentation.git
-    cd 2D_Segmentation
-    ```
-
-2. Gerekli kütüphaneleri yükleyin:
-
-    ```bash
-    !pip install monai matplotlib numpy torch torchvision opencv-python
-    ```
-
+Verisetini indirip, uygun formatta olduğundan emin olduktan sonra, eğitim ve test işlemleri için kullanabilirsiniz.
