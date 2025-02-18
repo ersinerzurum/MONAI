@@ -1,6 +1,6 @@
 # 2D Nesne Segmentasyonu
 
-Bu proje, 2D görüntülerdeki nesneleri segmentlemek için derin öğrenme kullanarak bir model eğitmek ve test etmek için geliştirilmiştir. Model, MONAI kütüphanesi ve PyTorch kullanılarak oluşturulmuş bir U-Net yapısını temel alır. Kullanıcı, farklı şekillerde nesneler oluşturabilir (daire, kare, dikdörtgen, üçgen, elips) ve bu nesneleri segmentlemek için modelin tahminlerini alabilir.
+Bu proje, 2D görüntülerdeki nesneleri basit bir şekilde segmentlemek için derin öğrenme kullanarak bir model eğitmek ve test etmek için geliştirilmiştir. Model, MONAI kütüphanesi ve PyTorch kullanılarak oluşturulmuş bir U-Net yapısını temel alır. Kullanıcı, farklı şekillerde nesneler oluşturabilir (daire, kare, dikdörtgen, üçgen, elips) ve bu nesneleri segmentlemek için modelin tahminlerini alabilir.
 
 ## Proje Adımları
 
@@ -8,7 +8,7 @@ Bu proje, 2D görüntülerdeki nesneleri segmentlemek için derin öğrenme kull
    Projeyi çalıştırmadan önce, gerekli Python kütüphanelerini yüklemeniz gerekmektedir. Aşağıdaki adımları izleyerek gerekli kütüphaneleri yükleyebilirsiniz.
 
     ```bash
-    pip install -r requirements.txt
+    !pip install monai matplotlib numpy torch torchvision opencv-python
     ```
 
 2. **Veri Üretimi ve Eğitimi**:
@@ -62,19 +62,13 @@ Bu proje, 2D görüntülerdeki nesneleri segmentlemek için derin öğrenme kull
 1. Projeyi kendi bilgisayarınıza klonlayın:
 
     ```bash
-    git clone https://github.com/kullanici_adiniz/2D_Segmentation.git
+    git clone https://github.com/ersinerzurum/MONAI/2D_Segmentation.git
     cd 2D_Segmentation
     ```
 
 2. Gerekli kütüphaneleri yükleyin:
 
     ```bash
-    pip install -r requirements.txt
+    !pip install monai matplotlib numpy torch torchvision opencv-python
     ```
 
-### Modeli Eğitme
-
-Modeli eğitmek için aşağıdaki kodu çalıştırabilirsiniz:
-
-```python
-python train.py
